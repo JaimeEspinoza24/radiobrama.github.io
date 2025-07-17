@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radio Brama</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 150vh;
+      font-family: 'Roboto', sans-serif;
+      background: url('https://i.pinimg.com/originals/03/82/e5/0382e5476b38863a0c2405a6c252ae1e.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      overflow-y: scroll;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: -1;
+    }
+
+    /* Cabezal nuevo */
+    header {
+      background-color: #ff9900;
+      padding: 20px 15px;
+      text-align: center;
+      color: #000;
+      box-shadow: 0 2px 6px rgba(255, 153, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-weight: 700;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 2px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      color: #333;
+    }
+
+    .cover {
+      width: 90%;
+      max-width: 1200px;
+      height: 300px;
+      margin: 30px auto 0 auto;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(255, 204, 0, 0.5);
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .cover:hover {
+      transform: scale(1.03);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto 60px auto;
+      background: rgba(0,0,0,0.6);
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #ff9900aa;
+      text-align: center;
+    }
+
+    /* Reproductor personalizado */
+    .custom-player {
+      max-width: 600px;
+      background: #222;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 0 auto 40px auto;
+      box-shadow: 0 0 30px #ff9900aa;
+      color: #ffcc00;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+    .custom-player .info {
+      margin-bottom: 15px;
+    }
+
+    .radio-name {
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-shadow: 0 0 12px #ff9900;
+    }
+
+    .current-song {
+      font-size: 1.2rem;
+      margin-top: 6px;
+      font-style: italic;
+      color: #ffcc0077;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+    }
+
+    #playPause {
+      background: #ff9900;
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      font-size: 2.8rem;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ffcc00;
+      transition: background 0.3s;
+    }
+
+    #playPause:hover {
+      background: #ffcc00;
+    }
+
+    #volume {
+      width: 150px;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      color: #ffcc00;
+      text-shadow: 0 0 8px #ff9900;
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin: 12px 0 28px 0;
+      color: #ffcc00cc;
+    }
+
+    .social, .app-link {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .social a, .app-link a {
+      background-color: #222;
+      color: #ffcc00;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 15px #ff9900aa;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+    }
+
+    .social a:hover, .app-link a:hover {
+      background-color: #ff9900;
+      color: #000;
+      box-shadow: 0 0 20px #ffcc00;
+    }
+
+    .social a svg, .app-link a svg {
+      fill: currentColor;
+      width: 22px;
+      height: 22px;
+    }
+
+    footer {
+      background-color: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 18px 10px;
+      font-size: 0.9rem;
+      user-select: none;
+      box-shadow: inset 0 2px 8px #333;
+      letter-spacing: 0.5px;
+    }
+
+    /* Sección contacto */
+    #contact-section {
+      max-width: 600px;
+      margin: 40px auto 20px auto;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff9900;
+      text-align: center;
+    }
+
+    #contact-section h3 {
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    #contact-section p {
+      font-size: 1.1rem;
+      color: #ffcc00;
+    }
+
+    #contact-section a {
+      color: #ff9900;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Sección mensajes */
+    #message-section {
+      max-width: 600px;
+      margin: 20px auto 40px auto;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff9900;
+      text-align: center;
+    }
+
+    #message-section h3 {
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+
+    #messageForm {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #messageForm input,
+    #messageForm textarea {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      resize: none;
+    }
+
+    #messageForm button {
+      background: #ff9900;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #messageForm button:hover {
+      background: #ffcc00;
+    }
+
+    #responseMsg {
+      color: #ffcc00;
+      margin-top: 15px;
+      min-height: 24px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      main {
+        margin: 20px 15px 40px 15px;
+        padding: 20px 15px;
+      }
+      .social a, .app-link a {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+      }
+      #contact-section,
+      #message-section {
+        margin: 20px 15px;
+        padding: 15px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Radio Brama</h1>
+    <p>¡PODER QUE SE SIENTE!</p>
+  </header>
+
+  <img class="cover" src="radiobramafuego1.png" alt="Portada Radio Brama" />
+
+  <main>
+    <!-- Reproductor personalizado -->
+    <div class="custom-player" role="region" aria-label="Reproductor de Radio Brama">
+      <div class="info">
+        <div class="radio-name">Radio Brama</div>
+        <div class="current-song" id="currentSong">Escuchando ahora: Música en vivo</div>
+      </div>
+      <audio id="audio" preload="none" src="http://s18.myradiostream.com:13902/;"></audio>
+      <div class="controls">
+        <button id="playPause" aria-label="Play/Pause">▶️</button>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" aria-label="Volumen" />
+      </div>
+    </div>
+
+    <h2>Locutor: Jaime Espinoza</h2>
+    <p>Conectando contigo 24/7 desde Radio Brama.</p>
+
+    <div class="social" aria-label="Redes sociales">
+      <a href="https://facebook.com/jaime.espinoza.5680" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.31h3.59l-.467 3.622h-3.123V24h6.116c.73 0 1.324-.593 1.324-1.324V1.325C24 .593 23.406 0 22.675 0z"/></svg>
+        Facebook
+      </a>
+      <a href="https://instagram.com/queques" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2A5.75 5.75 0 0 0 2 7.75v8.5A5.75 5.75 0 0 0 7.75 22h8.5A5.75 5.75 0 0 0 22 16.25v-8.5A5.75 5.75 0 0 0 16.25 2h-8.5zM12 7.25a4.75 4.75 0 1 1 0 9.5a4.75 4.75 0 0 1 0-9.5zm5.5-.75a1.25 1.25 0 1 1 0 2.5a1.25 1.25 0 0 1 0-2.5z"/></svg>
+        Instagram
+      </a>
+    </div>
+
+    <div class="app-link" aria-label="Descargar app">
+      <a href="https://play.google.com/store/apps/details?id=com.radio.radiobrama&hl=es_CL&gl=US" target="_blank" rel="noopener" aria-label="Play Store">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.5 0l21 12-21 12z" fill="currentColor"/></svg>
+        Ir a Play Store
+      </a>
+    </div>
+
+    <!-- Sección contacto -->
+    <section id="contact-section">
+      <h3>Contáctanos para promociones</h3>
+      <p>
+        Escríbenos a: <a href="mailto:herediaespinoza2224@gmail.com">herediaespinoza2224@gmail.com</a>
+      </p>
+    </section>
+
+    <!-- Sección mensajes -->
+    <section id="message-section">
+      <h3>Déjanos tu mensaje</h3>
+      <form id="messageForm">
+        <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+        <textarea id="message" name="message" placeholder="Tu mensaje o sugerencia" rows="4" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+      <div id="responseMsg"></div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Radio Brama - Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Control reproductor
+    const audio = document.getElementById('audio');
+    const playPause = document.getElementById('playPause');
+    const volume = document.getElementById('volume');
+    const currentSong = document.getElementById('currentSong');
+
+    playPause.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playPause.textContent = '⏸️';
+      } else {
+        audio.pause();
+        playPause.textContent = '▶️';
+      }
+    });
+
+    volume.addEventListener('input', () => {
+      audio.volume = volume.value;
+    });
+
+    audio.addEventListener('playing', () => {
+      playPause.textContent = '⏸️';
+    });
+
+    audio.addEventListener('pause', () => {
+      playPause.textContent = '▶️';
+    });
+
+    // Por ahora, texto fijo
+    currentSong.textContent = "Escuchando ahora: Música en vivo";
+
+    // Formulario mensajes
+    const form = document.getElementById('messageForm');
+    const responseMsg = document.getElementById('responseMsg');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const message = form.message.value.trim();
+
+      if (name && message) {
+        responseMsg.textContent = `¡Gracias por tu mensaje, ${name}!`;
+        form.reset();
+      } else {
+        responseMsg.textContent = "Por favor completa todos los campos.";
+      }
+    });
+  </script>
+</body>
+</html>
